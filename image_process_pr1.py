@@ -2,27 +2,22 @@ import cv2
 import numpy as np
 
 def load_image(path):
-    """Load image and normalize to [0, 1]"""
     img = cv2.imread(path)
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
     return img.astype(np.float32) / 255.0
 
 
 def save_image(path, img):
-    """Save image from [0, 1] to uint8"""
     img = np.clip(img * 255.0, 0, 255).astype(np.uint8)
     img = cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
     cv2.imwrite(path, img)
 
 
 def lighten(A, B):
-    # if B ≤ A then C = A
-    # if B > A then C = B
     return np.maximum(A, B)
 
 
 def difference(A, B):
-    # C = |A - B|
     return np.abs(A - B)
 
 
@@ -64,3 +59,4 @@ if __name__ == "__main__":
     save_image("soft_light.png", out_soft_light)
 
     print("Blending completed successfully.")
+
